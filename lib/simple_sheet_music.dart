@@ -19,5 +19,11 @@ export 'src/music_objects/notes/single_note/note.dart' show Note;
 // export 'src/music_objects/notes/stem_direction.dart' show StemDirection;
 export 'src/music_objects/rest/rest.dart' show Rest;
 export 'src/music_objects/rest/rest_type.dart' show RestType;
+
+//add export statements
 export 'src/music_objects/interface/musical_symbol.dart'
-    show MusicalSymbol;
+    show MusicalSymbol, MusicalSymbolMetrics;
+export 'src/glyph_metadata.dart' show GlyphMetadata;
+export 'src/glyph_path.dart' show GlyphPaths;
+export 'src/musical_context.dart' show MusicalContext;
+export 'src/sheet_music_layout.dart' show SheetMusicLayout;
