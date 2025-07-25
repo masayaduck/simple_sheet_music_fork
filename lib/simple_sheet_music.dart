@@ -24,6 +24,8 @@ export 'src/music_objects/rest/rest_type.dart' show RestType;
 export 'src/music_objects/interface/musical_symbol.dart'
     show MusicalSymbol;
 export 'src/music_objects/interface/musical_symbol_metrics.dart' show MusicalSymbolMetrics;
+export 'src/music_objects/interdace/musical_symbol_renderer.dart'
+    show MusicalSymbolRenderer;
 export 'src/glyph_metadata.dart' show GlyphMetadata;
 export 'src/glyph_path.dart' show GlyphPaths;
 export 'src/musical_context.dart' show MusicalContext;
