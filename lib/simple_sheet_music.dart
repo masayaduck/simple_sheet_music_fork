@@ -31,3 +31,5 @@ export 'src/glyph_path.dart' show GlyphPaths;
 export 'src/musical_context.dart' show MusicalContext;
 export 'src/sheet_music_layout.dart' show SheetMusicLayout;
 export 'src/music_objects/clef/clef_type.dart' show ClefType;
+export 'src/music_objects/key_signature/keysignature_type.dart'
+    show KeySignatureType;
