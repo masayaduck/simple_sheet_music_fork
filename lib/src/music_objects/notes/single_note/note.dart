@@ -25,7 +25,8 @@ class Note implements MusicalSymbol {
     this.accidental,
     this.margin = const EdgeInsets.all(10),
     this.color = Colors.black,
-    this.isDotted = false
+    this.isDotted = false,
+    this.fingerNumber = -1// 運指
     // this.stemDirection,
   });
 
@@ -48,6 +49,8 @@ class Note implements MusicalSymbol {
   final Accidental? accidental;
 
   final bool isDotted; //付点音符かどうか
+
+  final int fingerNumber; // 運指
 
   /// The type of note head based on the note duration.
   NoteHeadType get noteHeadType => noteDuration.noteHeadType;
@@ -257,6 +260,9 @@ class NoteMetrics implements MusicalSymbolMetrics {
   // 付点音符かどうか
   bool get hasDot => note.isDotted;
 
+  // 運指番号
+  int get fingerNumber => note.fingerNumber;
+
   // Whether the stem is up.
   // bool get _isStemUp => note.stemDirection?.isUp ?? _defaultStemDirection.isUp;
   bool get _isStemUp => _defaultStemDirection.isUp;
@@ -355,7 +361,9 @@ class NoteRenderer implements MusicalSymbolRenderer {
     _renderAccidental(canvas);
     _renderStem(canvas);
     _renderLegerLine(canvas);
+    _renderFingerNumber(canvas);
     _renderDotted(canvas);
+    //_renderFingerNumber(canvas);
   }
 
   void _renderNoteHead(Canvas canvas) {
@@ -401,12 +409,45 @@ class NoteRenderer implements MusicalSymbolRenderer {
 
 
     //print("noteHeadY: $noteHeadY");
-    final dotOffset = _renderOffset + Offset(note.noteHeadLeftX + (note.noteHeadWidth*1.1), noteHeadY + (note.noteHeadWidth/4));
+    final dotOffset = _renderOffset + Offset(note.noteHeadLeftX + (note.noteHeadWidth*1.4), noteHeadY + (note.noteHeadWidth/4));
     canvas.drawCircle(
       dotOffset,
       noteHeadSizeHeight / 4, // ドットの半径はノートの頭の高さの1/4
       Paint()..color = note.color,
     );
+  }
+
+  void _renderFingerNumber(Canvas canvas) {
+    if (note.fingerNumber < 0) {
+      return; // 運指番号が設定されていない場合は何もしない
+    }
+    //ノートの頭のサイズを取得
+    final noteHeadSizeHeight = note.noteHeadPath.getBounds().size.height;
+    final textPainter = TextPainter(
+      text: TextSpan(
+        //text: note.fingerNumber.toString(),
+        text: 'Hello',
+        style: TextStyle(
+          color: note.color,
+          //fontSize: noteHeadSizeHeight / 4,
+          fontSize: 16,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+      //textDirection: TextDirection.rtl,
+    );
+    
+    textPainter.layout(minWidth: 0, maxWidth: note.noteHeadWidth);
+    print("運指番号: ${note.fingerNumber}");
+    //final offset = _renderOffset + Offset(note.noteHeadLeftX + note.noteHeadWidth / 2 - textPainter.width / 2, noteHeadSizeHeight * 4);
+    final offset = _renderOffset + Offset(note.noteHeadLeftX,0);
+    textPainter.paint(canvas, offset);
+    canvas.drawCircle(
+      offset,
+      noteHeadSizeHeight / 4, // ドットの半径はノートの頭の高さの1/4
+      Paint()..color = note.color,
+    );
+    print("Text width: ${textPainter.width}");
   }
 
   /// Returns the path of the note head, shifted by the render offset.
