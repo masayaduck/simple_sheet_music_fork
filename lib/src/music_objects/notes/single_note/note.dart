@@ -394,8 +394,8 @@ class NoteRenderer implements MusicalSymbolRenderer {
     if (!note.hasDot) {
       return;
     }
-    //final noteHeadY = note.stavePosition.staffLineCenterY;
-    final noteHeadY = note.noteHeadPath.getBounds().center.dy;
+    final noteHeadY = note.stavePosition.staffLineCenterY;
+    //final noteHeadY = note.noteHeadPath.getBounds().center.dy;
     final dotOffset = _renderOffset + Offset(note.noteHeadLeftX + note.noteHeadWidth + 5, noteHeadY);
     canvas.drawCircle(
       dotOffset,
