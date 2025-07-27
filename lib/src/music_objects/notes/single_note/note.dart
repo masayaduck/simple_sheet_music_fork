@@ -103,7 +103,7 @@ class NoteMetrics implements MusicalSymbolMetrics {
 
   double get _right => [
         _noteHeadBbox.right,
-        hasDot ? _noteHeadBbox.right + 5 : double.infinity, // 付点音符ならば付点だけ横の大きさを増やす
+        //hasDot ? _noteHeadBbox.right + 5 : double.infinity, // 付点音符ならば付点だけ横の大きさを増やす
         (_flagBbox?.right ?? double.negativeInfinity),
         (_accidentalBbox?.right ?? double.negativeInfinity),
       ].max;
@@ -355,6 +355,7 @@ class NoteRenderer implements MusicalSymbolRenderer {
     _renderAccidental(canvas);
     _renderStem(canvas);
     _renderLegerLine(canvas);
+    _renderDotted(canvas);
   }
 
   void _renderNoteHead(Canvas canvas) {
