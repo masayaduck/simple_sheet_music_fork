@@ -394,13 +394,17 @@ class NoteRenderer implements MusicalSymbolRenderer {
     if (!note.hasDot) {
       return;
     }
-    final noteHeadY = note.stavePosition.staffLineCenterY;
-    print("noteHeadY: $noteHeadY");
-    //final noteHeadY = note.noteHeadPath.getBounds().center.dy;
-    final dotOffset = _renderOffset + Offset(note.noteHeadLeftX + note.noteHeadWidth + 5, noteHeadY);
+    //ノートの頭の中心Y座標
+    final noteHeadY = note.noteHeadPath.getBounds().center.dy;
+    //ノートの頭のサイズを取得
+    final noteHeadSizeHeight = note.noteHeadPath.getBounds().size.height;
+
+
+    //print("noteHeadY: $noteHeadY");
+    final dotOffset = _renderOffset + Offset(note.noteHeadLeftX + (note.noteHeadWidth/2), noteHeadY);
     canvas.drawCircle(
       dotOffset,
-      note.noteHeadWidth / 4,
+      noteHeadSizeHeight / 4, // ドットの半径はノートの頭の高さの1/4
       Paint()..color = note.color,
     );
   }
