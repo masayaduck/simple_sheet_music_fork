@@ -401,7 +401,7 @@ class NoteRenderer implements MusicalSymbolRenderer {
 
 
     //print("noteHeadY: $noteHeadY");
-    final dotOffset = _renderOffset + Offset(note.noteHeadLeftX + (note.noteHeadWidth/2), noteHeadY);
+    final dotOffset = _renderOffset + Offset(note.noteHeadLeftX + note.noteHeadWidth, noteHeadY + (note.noteHeadWidth/4));
     canvas.drawCircle(
       dotOffset,
       noteHeadSizeHeight / 4, // ドットの半径はノートの頭の高さの1/4
