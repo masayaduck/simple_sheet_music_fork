@@ -361,9 +361,8 @@ class NoteRenderer implements MusicalSymbolRenderer {
     _renderAccidental(canvas);
     _renderStem(canvas);
     _renderLegerLine(canvas);
-    _renderFingerNumber(canvas);
     _renderDotted(canvas);
-    //_renderFingerNumber(canvas);
+    _renderFingerNumber(canvas);
   }
 
   void _renderNoteHead(Canvas canvas) {
@@ -423,30 +422,30 @@ class NoteRenderer implements MusicalSymbolRenderer {
     }
     //ノートの頭のサイズを取得
     final noteHeadSizeHeight = note.noteHeadPath.getBounds().size.height;
+    final noteHeadX = note.noteHeadPath.getBounds().center.dx - note.noteHeadWidth / 4; // ノートの頭の左端X座標
+    final textSize = noteHeadSizeHeight * 1.25; // 運指番号のフォントサイズをノートの頭の高さに基づいて設定
     final textPainter = TextPainter(
       text: TextSpan(
-        //text: note.fingerNumber.toString(),
-        text: 'Hello',
+        text: note.fingerNumber.toString(),
         style: TextStyle(
           color: note.color,
           //fontSize: noteHeadSizeHeight / 4,
-          fontSize: 16,
+          fontSize: textSize,
+          fontWeight: FontWeight.bold,
         ),
       ),
+      //textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
       //textDirection: TextDirection.rtl,
     );
-    
-    textPainter.layout(minWidth: 0, maxWidth: note.noteHeadWidth);
+    print("noteHeadSizeHeight: $noteHeadSizeHeight");
+    textPainter.layout();
     print("運指番号: ${note.fingerNumber}");
     //final offset = _renderOffset + Offset(note.noteHeadLeftX + note.noteHeadWidth / 2 - textPainter.width / 2, noteHeadSizeHeight * 4);
-    final offset = _renderOffset + Offset(note.noteHeadLeftX,0);
+    final offset = _renderOffset + Offset(noteHeadX, noteHeadSizeHeight * 4);
+    //final offset = _renderOffset + Offset(note.noteHeadLeftX,0);
+    //final offset = Offset(600,300);
     textPainter.paint(canvas, offset);
-    canvas.drawCircle(
-      offset,
-      noteHeadSizeHeight / 4, // ドットの半径はノートの頭の高さの1/4
-      Paint()..color = note.color,
-    );
     print("Text width: ${textPainter.width}");
   }
 
