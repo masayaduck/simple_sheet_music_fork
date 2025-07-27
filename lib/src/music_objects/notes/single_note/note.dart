@@ -25,6 +25,7 @@ class Note implements MusicalSymbol {
     this.accidental,
     this.margin = const EdgeInsets.all(10),
     this.color = Colors.black,
+    this.isDotted = false
     // this.stemDirection,
   });
 
@@ -45,6 +46,8 @@ class Note implements MusicalSymbol {
 
   /// The accidental of the note (if any).
   final Accidental? accidental;
+
+  final bool isDotted; //付点音符かどうか
 
   /// The type of note head based on the note duration.
   NoteHeadType get noteHeadType => noteDuration.noteHeadType;
@@ -100,6 +103,7 @@ class NoteMetrics implements MusicalSymbolMetrics {
 
   double get _right => [
         _noteHeadBbox.right,
+        hasDot ? _noteHeadBbox.right + 5 : double.infinity, // 付点音符ならば付点だけ横の大きさを増やす
         (_flagBbox?.right ?? double.negativeInfinity),
         (_accidentalBbox?.right ?? double.negativeInfinity),
       ].max;
@@ -250,6 +254,9 @@ class NoteMetrics implements MusicalSymbolMetrics {
   // Whether the note has a stem.
   bool get hasStem => note.noteDuration.hasStem;
 
+  // 付点音符かどうか
+  boo; get hasDot => note.isDotted;
+
   // Whether the stem is up.
   // bool get _isStemUp => note.stemDirection?.isUp ?? _defaultStemDirection.isUp;
   bool get _isStemUp => _defaultStemDirection.isUp;
@@ -379,6 +386,18 @@ class NoteRenderer implements MusicalSymbolRenderer {
       Paint()
         ..color = note.color
         ..strokeWidth = note.stemThickness,
+    );
+  }
+
+  void _renderDotted(Canvas canvas) {
+    if (!note.hasDot) {
+      return;
+    }
+    final dotOffset = _renderOffset + Offset(note.noteHeadLeftX + note.noteHeadWidth + 5, 0);
+    canvas.drawCircle(
+      dotOffset,
+      note.noteHeadWidth / 4,
+      Paint()..color = note.color,
     );
   }
 
