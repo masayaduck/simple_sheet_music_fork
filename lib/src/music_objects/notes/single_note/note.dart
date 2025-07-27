@@ -255,7 +255,7 @@ class NoteMetrics implements MusicalSymbolMetrics {
   bool get hasStem => note.noteDuration.hasStem;
 
   // 付点音符かどうか
-  boo; get hasDot => note.isDotted;
+  bool get hasDot => note.isDotted;
 
   // Whether the stem is up.
   // bool get _isStemUp => note.stemDirection?.isUp ?? _defaultStemDirection.isUp;
