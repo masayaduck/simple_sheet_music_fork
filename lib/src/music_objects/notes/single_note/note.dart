@@ -16,6 +16,7 @@ import 'package:simple_sheet_music/src/music_objects/notes/positions.dart';
 import 'package:simple_sheet_music/src/music_objects/notes/stem_direction.dart';
 import 'package:simple_sheet_music/src/musical_context.dart';
 import 'package:simple_sheet_music/src/sheet_music_layout.dart';
+import 'package:simple_sheet_music/src/music_objects/notes/single_note/beam.dart'
 
 /// Represents a musical note.
 class Note implements MusicalSymbol {
@@ -26,7 +27,8 @@ class Note implements MusicalSymbol {
     this.margin = const EdgeInsets.all(10),
     this.color = Colors.black,
     this.isDotted = false,
-    this.fingerNumber = -1// 運指
+    this.fingerNumber = -1,// 運指
+    this.useBeam = false,
     // this.stemDirection,
   });
 
@@ -51,6 +53,8 @@ class Note implements MusicalSymbol {
   final bool isDotted; //付点音符かどうか
 
   final int fingerNumber; // 運指
+
+  final bool useBeam = false; // ビームを使用するかどうか
 
   /// The type of note head based on the note duration.
   NoteHeadType get noteHeadType => noteDuration.noteHeadType;
@@ -333,6 +337,7 @@ class NoteMetrics implements MusicalSymbolMetrics {
   // The bounding box of the flag.
   Rect? get _flagBbox => flagPath?.getBounds();
 }
+
 
 /// A class that renders a musical note symbol.
 class NoteRenderer implements MusicalSymbolRenderer {
